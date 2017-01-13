@@ -7,6 +7,7 @@ module Dominusrb
       extend Dominusrb
 
       command [:twitter,:tw],
+              required_permissions: [:manage_server],
               description: "Toggle Twitter Searching Enable/Disable this channel" do |event|
 
         # toggle code
@@ -34,6 +35,7 @@ module Dominusrb
       end
 
       command [:chktw],
+              required_permissions: [:manage_server],
               description: "Check TwitterSearch Status this channel" do |event|
         server = get_record(event.server.id)
         unless server
@@ -58,6 +60,7 @@ module Dominusrb
       end
 
       command [:updttw],
+              required_permissions: [:manage_server],
               min_args:1,
               max_args:1,
               usage: "#{BOT.prefix}updttw hogehoge",
@@ -79,6 +82,7 @@ module Dominusrb
       end
 
       command [:addtw],
+              required_permissions: [:manage_server],
               min_args:1,
               max_args:1,
               usage: "#{BOT.prefix}addtw hogehoge",
