@@ -57,11 +57,32 @@ module Dominusrb
         end
       end
 
+      command [:updttw],
+              min_args:1,
+              max_args:1,
+              usage: "#{BOT.prefix}updttw hogehoge",
+              description: "update Twitter Search keyword this channel" do |event, *keyword|
+
+        server = get_record(event.server.id)
+        unless server
+          Database::Server.create(server_id: event.server.id,
+                                  server_name: BOT.server(event.server.id).name,
+                                  author_id: event.user.id,
+                                  author_name: event.user.name)
+        end
+
+        twittersearch = Database::Twittersearch.where(channel_id: event.channel.id)
+        event.respond "Setting is Empty this channel" unless twittersearch
+
+        twittersearch.update(keyword: keyword.join)
+        "success update search keyword"
+      end
+
       command [:addtw],
               min_args:1,
               max_args:1,
               usage: "#{BOT.prefix}addtw hogehoge",
-              description: "add Twitter Search keyword" do |event, *keyword|
+              description: "add Twitter Search keyword this channel" do |event, *keyword|
 
         # add keyword
         server = get_record(event.server.id)
