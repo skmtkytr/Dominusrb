@@ -9,7 +9,7 @@ module Dominusrb
         channel&.send_embed '', user_embed(event.user, true)
 
         # Autoroling
-        autorole = Database::Autorole.where(server_id: event.server.id ,enable_autorole: 0 ).first
+        autorole = Database::Role.where(server_id: event.server.id ,enable_autorole: 0 ).first
         if autorole || !autorole.roles.empty?
           server_autoroles = []
           autorole.roles.each {|role| server_autoroles << DiscordCommands::Autorole.get_role_id(role.role_id,event.server.id)}
