@@ -31,7 +31,7 @@ module Dominusrb
   end
 
   # create the bot.
-  BOT = Discordrb::Commands::CommandBot.new token: ENV['DISCORD_BOT_TOKEN'], client_id: ENV['DISCORD_BOT_CLIENT_ID'], prefix: '!'
+  BOT = Discordrb::Commands::CommandBot.new token: ENV['DISCORD_BOT_TOKEN'], client_id: ENV['DISCORD_BOT_CLIENT_ID'], prefix: 'd!'
 
   RATE_LIMITTER = Discordrb::Commands::SimpleRateLimiter.new
   RATE_LIMITTER.bucket :example, delay: 5 # 5 seconds between each execution
