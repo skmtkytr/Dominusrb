@@ -1,6 +1,6 @@
 module Dominusrb
   module DiscordEvents
-    # These events are called when a memeber leaves and joins a server.
+    # These events are called when a member leaves and joins a server.
     module MemberJoinLeave
       extend Discordrb::EventContainer
 

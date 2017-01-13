@@ -16,8 +16,19 @@ module Dominusrb
   # load .env
   Dotenv.load
 
-  # event scheduler
-  SCHEDULER = Rufus::Scheduler.new
+  def get_role(role,server_id)
+    server = BOT.server server_id
+    server.roles.find {|server_role| server_role.name == role}
+  end
+
+  def get_role_id(role_id,server_id)
+    server = BOT.server server_id
+    server.roles.find {|server_role| server_role.id == role_id}
+  end
+
+  def get_record(server_id)
+    Database::Server.where(server_id: server_id).first
+  end
 
   # create the bot.
   BOT = Discordrb::Commands::CommandBot.new token: ENV['DISCORD_BOT_TOKEN'], client_id: ENV['DISCORD_BOT_CLIENT_ID'], prefix: '!'

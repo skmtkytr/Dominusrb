@@ -18,9 +18,6 @@ module Dominusrb
       BOT.message(from: ["kyotaro","test"], in: "#testing") do |event|
 
         event.respond "testing! @#{event.server.to}"
-        p event.server
-        logger.debug('ponging')
-        logger.info('ponging')
       end
 
     end

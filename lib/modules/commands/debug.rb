@@ -3,16 +3,16 @@ module Dominusrb
     module Debug
       extend Discordrb::Commands::CommandContainer
 
+      # default "false"
       debug = false
 
       command :debug , description: 'swap debug mode' do |event|
-        unless event.user.id ==
-            BOT.bot_app.owner.id then
+        unless event.user.id == BOT.bot_app.owner.id
           event.respond 'You are not Bot Owner'
           break
         end
 
-        if debug then
+        if debug
           BOT.debug '-------- debug mode OFF --------'
           BOT.mode=:normal
           debug = false

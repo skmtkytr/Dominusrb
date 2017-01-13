@@ -9,6 +9,7 @@ gem 'rufus-scheduler'
 gem 'sequel'
 gem 'sqlite3'
 gem 'terminal-table'
+gem 'twitter'
 
 group :development do
   gem 'guard'

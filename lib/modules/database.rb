@@ -6,6 +6,8 @@ module Dominusrb
   module Database
     # Connect to database
     DB = Sequel.connect('sqlite://data/dominusrb.sqlite3')
+    DB.loggers << Discordrb::LOGGER
+    DB.sql_log_level = :debug
 
     # Load migrations
     Sequel.extension :migration
@@ -17,9 +19,7 @@ module Dominusrb
     # Load models
     Dir['lib/modules/database/*.rb'].each { |mod| load mod }
 
-    # Initialize database (maybe)
     def self.init!
-      # sync with data/dah-cards
     end
 
   end

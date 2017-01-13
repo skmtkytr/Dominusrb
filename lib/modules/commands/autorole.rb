@@ -3,20 +3,7 @@ module Dominusrb
   module DiscordCommands
     module Autorole
       extend Discordrb::Commands::CommandContainer
-
-      def self.get_role(role,server_id)
-        server = BOT.server server_id
-        server.roles.find {|server_role| server_role.name == role}
-      end
-
-      def self.get_role_id(role_id,server_id)
-        server = BOT.server server_id
-        server.roles.find {|server_role| server_role.id == role_id}
-      end
-
-      def self.get_record(server_id)
-        Database::Autorole.where(server_id: server_id).first
-      end
+      extend Dominusrb
 
       command [:addautorole,:addar] ,
               min_args: 1,
@@ -31,23 +18,23 @@ module Dominusrb
           exist_role << role_data if role_data
         end
 
-        autorole = get_record(event.server.id)
+        server = get_record(event.server.id)
 
-        unless autorole
-          Database::Autorole.create(server_id: event.server.id,
+        unless server
+          Database::Server.create(server_id: event.server.id,
                                      server_name: BOT.server(event.server.id).name,
                                      author_id: event.user.id,
                                      author_name: event.user.name)
-          autorole = get_record(event.server.id)
+          server = get_record(event.server.id)
         end
 
         exist_role.each do |role|
           next if role.nil?
-          if !autorole.roles.empty? || autorole.roles.find {|dbrole| dbrole.role_id == role.id}
+          if !server.roles.empty? || server.roles.find {|dbrole| dbrole.role_id == role.id}
             already_role << role
             next
           end
-          autorole.add_role(role_id: role.id)
+          server.add_role(role_id: role.id)
         end
 
         if exist_role.empty?
@@ -70,8 +57,8 @@ module Dominusrb
 #{BOT.prefix}delar [role] ...",
               description: 'delete autorole role' do |event , *roles|
 
-        autorole = get_record(event.server.id)
-        if autorole.nil? || autorole.roles.empty?
+        server = get_record(event.server.id)
+        if server.nil? || server.roles.empty?
           event.respond "Setting is Empty"
           break
         end
@@ -81,7 +68,7 @@ module Dominusrb
           exist_role << role_data if role_data
         end
 
-        autorole.roles.each do |role|
+        server.roles.each do |role|
           role.delete if exist_role.map(&:id).find(role.role_id)
         end
 
@@ -89,9 +76,9 @@ module Dominusrb
       end
 
       command [:autorole,:ar] , description: 'toggle autorole Enable/Disable' do |event|
-        first = get_record(event.server.id)
-        if first.nil?
-          Database::Autorole.create(server_id: event.server.id,
+        server = get_record(event.server.id)
+        if server.nil?
+          Database::Server.create(server_id: event.server.id,
                                      server_name: BOT.server(event.server.id).name,
                                      author_id: event.user.id,
                                      author_name: event.user.name,
@@ -99,24 +86,26 @@ module Dominusrb
           event.respond "Set **Enable** Autorole"
         else
           # 0 => true / 1 => false
-          toggle = if first.enable_autorole.zero?
+          toggle = if server.enable_autorole.zero?
                      1
                    else
                      0
                    end
-          Database::Autorole.where(server_id: event.server.id).all { |record| record.update(enable_autorole: toggle)}
+          Database::Server.where(server_id: event.server.id).all { |record| record.update(enable_autorole: toggle)}
           event.respond "Set **#{toggle.zero? ? "Enable":"Disable"}** Autorole"
         end
       end
 
       command [:chkautorole,:chkar] , description: 'check autorole role' do |event|
-        autorole = get_record(event.server.id)
-        if autorole.nil? || autorole.roles.empty?
-          "Setting is Empty"
+        server = get_record(event.server.id)
+        if server.nil? || server.roles.empty?
+          "Autorole Setting is **#{server.enable_autorole.zero? ? "Enable":"Disable"}**
+autorole roles are **Empty**"
         else
           setted_role = []
-          autorole.roles.each {|role| setted_role << get_role_id(role.role_id ,event.server.id)}
-          "Setting Autorole `#{setted_role.map(&:name).join(' ')}`"
+          server.roles.each {|role| setted_role << get_role_id(role.role_id ,event.server.id)}
+          "Autorole Settings **#{server.enable_autorole.zero? ? "Enable":"Disable"}**
+autorole roles: **#{setted_role.map(&:name).join(' ')}**"
         end
       end
     end
