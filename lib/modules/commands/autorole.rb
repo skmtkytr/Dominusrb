@@ -6,6 +6,7 @@ module Dominusrb
       extend Dominusrb
 
       command [:addautorole,:addar] ,
+              required_permissions: [:manage_roles],
               min_args: 1,
               usage: "
 #{BOT.prefix}addautorole [role] ...
@@ -51,6 +52,7 @@ module Dominusrb
       end
 
       command [:delautorole,:delar] ,
+              required_permissions: [:manage_roles],
               min_args: 1,
               usages: "
 #{BOT.prefix}delautorole [role] ...
@@ -75,7 +77,9 @@ module Dominusrb
         "delete autorole role **#{roles.join(' ')}**"
       end
 
-      command [:autorole,:ar] , description: 'toggle autorole Enable/Disable' do |event|
+      command [:autorole,:ar] ,
+              required_permissions: [:manage_roles],
+              description: 'toggle autorole Enable/Disable' do |event|
         server = get_record(event.server.id)
         if server.nil?
           Database::Server.create(server_id: event.server.id,
@@ -96,7 +100,9 @@ module Dominusrb
         end
       end
 
-      command [:chkautorole,:chkar] , description: 'check autorole role' do |event|
+      command [:chkautorole,:chkar] ,
+              required_permissions: [:manage_roles],
+              description: 'check autorole role' do |event|
         server = get_record(event.server.id)
         if server.nil? || server.roles.empty?
           "Autorole Setting is **#{server.enable_autorole.zero? ? "Enable":"Disable"}**
