@@ -21,3 +21,4 @@ Dominusrb is still in its early stages. To see our progress, and give feedbacks
 ### TODO
 - add more useful command
 - link to poe.trade
+- make Command List
