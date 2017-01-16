@@ -7,12 +7,23 @@ module Dominusrb
       # The `pm` method is used to send a private message (also called a DM or direct message) to the user who sent the
       # initial message.
       BOT.mention do |event|
-        event.respond("#{event.author.mention} You have mentioned me!")
-      end
-
-      BOT.message(containing: ["touch of god","touch" ,"god"]) do |event|
-        # break unless event.messages.mention_everyone?
-        event.respond "touch of god!"
+        res = [
+            "I offered you the gift of exile and you used it to reinvent yourself. I couldn't wish for a more potent instrument.",
+            "I exiled an animal. Now you almost resemble a man, Karui.",
+            "You'd bite the master that called you here, Witch?",
+            "I've dealt with far darker shadows than you, exile.",
+            "Welcome to the greatest of arenas, Duelist. God is watching.",
+            "Exile has tested you, my brother. Now let's see what God has to say.",
+            "It is woman's purpose to tempt and try the will of man.",
+            "Shrink not from god!",
+            "The touch of God!",
+            "The light of divinity!",
+            "Die!",
+            "Die in awe!",
+            "Nightmare prevails!",
+            "This world is an illusion, exile."
+        ]
+        event.respond("#{event.author.mention} #{res.sample}")
       end
 
       BOT.message(from: ["kyotaro","test"], in: "#testing") do |event|
