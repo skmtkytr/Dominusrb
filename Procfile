@@ -1,1 +1,1 @@
-web: bundle exec ruby run.rb
+discord: bundle exec ruby run.rb
