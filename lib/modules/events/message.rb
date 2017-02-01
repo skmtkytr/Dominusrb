@@ -25,12 +25,6 @@ module Dominusrb
         ]
         event.respond("#{event.author.mention} #{res.sample}")
       end
-
-      BOT.message(from: ["kyotaro","test"], in: "#testing") do |event|
-
-        event.respond "testing! @#{event.server.to}"
-      end
-
     end
   end
 end
