@@ -1,1 +1,1 @@
-web: ruby run.rb
+discord: ruby run.rb
