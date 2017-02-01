@@ -1,1 +1,1 @@
-discord: bundle exec ruby run.rb
+discord: ruby run.rb
