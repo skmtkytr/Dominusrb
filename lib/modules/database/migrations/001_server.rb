@@ -5,9 +5,9 @@ Sequel.migration do
       DateTime :created_at
       DateTime :updated_at
 
-      Integer :server_id, unique: true, null: false
+      Bignum :server_id, unique: true, null: false
       String :server_name
-      Integer :author_id
+      Bignum :author_id
       String :author_name
 
       # 0 => true / 1 => false

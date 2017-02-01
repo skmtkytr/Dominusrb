@@ -4,7 +4,7 @@ Sequel.migration do
       primary_key :id
       DateTime :crafted_at
 
-      Integer :role_id , null:false
+      Bignum :role_id , null:false
       foreign_key :server_id, :servers, on_delete: :cascade
     end
   end

@@ -4,7 +4,7 @@ Sequel.migration do
       primary_key :id
       DateTime :created_at
 
-      Integer :channel_id, unique: true, null: false
+      Bignum :channel_id, unique: true, null: false
       String :keyword, null: false
 
       # 0 => true / 1 => false
