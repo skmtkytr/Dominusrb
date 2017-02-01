@@ -5,7 +5,7 @@ module Dominusrb
   # Dominusrb's database
   module Database
     # Connect to database
-    DB = Sequel.connect('sqlite://data/dominusrb.sqlite3')
+    DB = Sequel.connect(ENV['DATABASE_URL'])
     DB.loggers << Discordrb::LOGGER
     DB.sql_log_level = :debug
 
