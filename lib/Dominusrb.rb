@@ -10,11 +10,11 @@ require 'sequel'
 # main bot module
 module Dominusrb
 
-  # load non-Discordrb modules
-  Dir['lib/modules/*.rb'].each { |mod| load mod }
 
   # load .env
   Dotenv.load
+  # load non-Discordrb modules
+  Dir['lib/modules/*.rb'].each { |mod| load mod }
 
   def get_role(role,server_id)
     server = BOT.server server_id
