@@ -5,7 +5,7 @@ module Dominusrb
     class SearchScheduler
       attr_accessor :client , :twitsearch
 
-      def initialize(rotation='5m')
+      def initialize(rotation='10m')
         @rotation = rotation
         @scheduler = Rufus::Scheduler.new
 
