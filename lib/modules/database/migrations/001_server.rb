@@ -16,6 +16,6 @@ Sequel.migration do
   end
 
   down do
-    drop_table(:server)
+    drop_table(:servers)
   end
 end
