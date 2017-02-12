@@ -5,7 +5,7 @@ module Dominusrb
     class SearchScheduler
       attr_accessor :client , :twitsearch
 
-      def initialize(rotation='10m')
+      def initialize(rotation='5m')
         @rotation = rotation
         @scheduler = Rufus::Scheduler.new
 
@@ -20,7 +20,8 @@ module Dominusrb
       end
 
       def self.twitsearch(client)
-        since_ids = {}
+
+        {} 
         -> do
           servers = Database::Server.all
 
@@ -28,21 +29,30 @@ module Dominusrb
             twittersearches = Database::Twittersearch.where(enable_twittersearch: 0,channel_id: BOT.server(server.server_id).channels.map(&:id)).all
 
             twittersearches.each do |twittersearch|
-              since_id = since_ids[twittersearch.channel_id]
-
               channel = BOT.server(server.server_id).channels.find {|c| c.id == twittersearch.channel_id}
 
               break unless channel
 
-              result_tweets = client.search(twittersearch.keyword, count: 5, result_type: "recent", exclude: "retweets", since_id: since_id)
+              result_tweets = client.search(twittersearch.keyword, count: 5, result_type: "recent", exclude: "retweets", since_id: twittersearch.since_id)
 
               result_tweets.take(5).reverse!.each do |tw|
 
+                # 厳密にはここまででbotのchannel発言権限の確認が必要だけどほっておく
+                # ここで例外が上がってしまうとsince_idが更新されないけどその時直す
                 channel&.send_message tw.uri
 
-                since_ids[twittersearch.channel_id] = tw.id if since_ids[twittersearch.channel_id].to_i < tw.id.to_i
                 sleep 5
               end
+              
+              ## update since_id
+              if twittersearch.since_id.nil?
+                twittersearch.update(since_id: result_tweets.to_a.first.id) 
+              else
+                twittersearch.update(since_id: result_tweets.to_a.first.id) if twittersearch.since_id < result_tweets.to_a.first.id unless result_tweets.to_a.first.nil?
+                
+
+              end
+
             end
           end
         end
