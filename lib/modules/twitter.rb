@@ -24,9 +24,15 @@ module Dominusrb
         {} 
         -> do
           servers = Database::Server.all
-
+          
           servers.each do |server|
-            twittersearches = Database::Twittersearch.where(enable_twittersearch: 0,channel_id: BOT.server(server.server_id).channels.map(&:id)).all
+            begin
+              target_channel_id = BOT.server(server.server_id).channels.map(&:id)
+            rescue => e
+              p e
+              next
+            end
+            twittersearches = Database::Twittersearch.where(enable_twittersearch: 0,channel_id: target_channel_id).all
 
             twittersearches.each do |twittersearch|
               channel = BOT.server(server.server_id).channels.find {|c| c.id == twittersearch.channel_id}

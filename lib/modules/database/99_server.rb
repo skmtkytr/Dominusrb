@@ -3,6 +3,7 @@ module Dominusrb
     class Server < Sequel::Model
       one_to_many :roles , :class => Database::Role
       one_to_many :twittersearches , :class => Database::Twittersearch
+      one_to_many :platoon_lobbies , :class => Database::Platoonlobby
 
       # Logging
       def after_create
