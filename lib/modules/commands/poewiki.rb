@@ -8,7 +8,7 @@ module Dominusrb
 
       command [:poewiki, :pwiki],
               min_args:1,
-          description: "generate Unique Item Wiki Link" do |event, *text|
+          description: "generate Unique Item Wiki Link" do |event, _text|
 
         arg = event.message.content.split("\n")
 

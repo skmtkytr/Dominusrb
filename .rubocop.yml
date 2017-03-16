@@ -89,6 +89,9 @@ Style/ClassVars:
 Style/ColonMethodCall:
   Enabled: false
 
+Style/MethodCallWithoutArgsParentheses:
+  Enabled: false
+
 Style/CommentAnnotation:
   Enabled: false
 
@@ -208,9 +211,6 @@ Style/LeadingCommentSpace:
   Enabled: false
 
 Style/LineEndConcatenation:
-  Enabled: false
-
-Style/MethodCallParentheses:
   Enabled: false
 
 Style/MethodDefParentheses:
