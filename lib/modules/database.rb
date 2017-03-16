@@ -17,7 +17,8 @@ module Dominusrb
     Sequel::Model.plugin :timestamps
 
     # Load models
-    Dir['lib/modules/database/*.rb'].each { |mod| load mod }
+    #Dir['lib/modules/database/*.rb'].each { |mod| load mod }
+    Dir.glob('lib/modules/database/*.rb').sort.each{ |mod| load mod }
 
     def self.init!
     end
